@@ -8,9 +8,9 @@ info:
   contact:
     email: "adrian.khoo@gcs-sg.com"
   license:
-    name: "Great Connection Systems Pte Ltd"
+    name: "Great Connection System Pte Ltd"
     url: ""
-host: "gcs-singapore.github.io/spacetann-api-doc"
+host: "https://api.spacetann.com"
 basePath: "/v1"
 schemes:
 - "https"
@@ -569,13 +569,6 @@ securityDefinitions:
     type: "apiKey"
     name: "api_key"
     in: "header"
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "https://petstore.swagger.io/oauth/authorize"
-    flow: "implicit"
-    scopes:
-      read:pets: "read your pets"
-      write:pets: "modify pets in your account"
 definitions:
   ApiResponse:
     type: "object"
