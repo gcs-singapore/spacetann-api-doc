@@ -33,6 +33,10 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/ListDevice'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
         405:
           description: "Invalid input"
   /ext/device/detail:
@@ -59,6 +63,10 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/DeviceDetail'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
         405:
           description: "Invalid input"
   /ext/device/status:
@@ -85,6 +93,70 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/DeviceStatus'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        405:
+          description: "Invalid input"
+  /ext/device/switch/binary/on:
+    post:
+      tags:
+      - "device"
+      summary: "Command for turn on IOT device"
+      security: 
+      - ApiKeyAuth: []
+        HMACKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Turn on IOT Device"
+        required: true
+        schema:
+          $ref: "#/definitions/GetDeviceDetail"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeviceSwitch'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        405:
+          description: "Invalid input"
+  /ext/device/switch/binary/off:
+    post:
+      tags:
+      - "device"
+      summary: "Command for turn off IOT device"
+      security: 
+      - ApiKeyAuth: []
+        HMACKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Turn off IOT Device"
+        required: true
+        schema:
+          $ref: "#/definitions/GetDeviceDetail"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeviceSwitch'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
         405:
           description: "Invalid input"
 securityDefinitions:
@@ -227,6 +299,39 @@ definitions:
             example: "2022-10-30T07:35:00.000Z"
           message:
             type: string
+      message:
+        type: string
+        example: Successful
+  InvalidResponse:
+    type: object
+    properties:
+      resultcode:
+        type: string
+        example: "107"
+      data:
+        type: object
+        example: null
+      message:
+        type: string
+        example: "Unexpected Fail"
+  DeviceSwitch:
+    type: object
+    properties: 
+      resultcode:
+        type: string
+        example: "100"
+      data:
+        type: object
+        properties: 
+          processed:
+            type: integer
+            example: 1
+          status:
+            type: string
+            example: "On"
+          message:
+            type: string
+            example: "message example here"
       message:
         type: string
         example: Successful
