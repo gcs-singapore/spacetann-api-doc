@@ -159,6 +159,96 @@ paths:
             $ref: '#/definitions/InvalidResponse'
         405:
           description: "Invalid input"
+  /ext/device/switch/status:
+    post:
+      tags:
+      - "device"
+      summary: "Command for status of IOT device"
+      security: 
+      - ApiKeyAuth: []
+        HMACKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "status of IOT Device"
+        required: true
+        schema:
+          $ref: "#/definitions/GetDeviceDetail"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeviceSwitch'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        405:
+          description: "Invalid input"
+  /ext/device/door/unlock:
+    post:
+      tags:
+      - "device"
+      summary: "Command for unlock door device"
+      security: 
+      - ApiKeyAuth: []
+        HMACKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "unlock door Device"
+        required: true
+        schema:
+          $ref: "#/definitions/UnlockDoorInput"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeviceSwitch'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        405:
+          description: "Invalid input"
+  /ext/device/door/status:
+    post:
+      tags:
+      - "device"
+      summary: "Command for status door device"
+      security: 
+      - ApiKeyAuth: []
+        HMACKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "status for door Device"
+        required: true
+        schema:
+          $ref: "#/definitions/StatusDoorInput"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeviceSwitch'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        405:
+          description: "Invalid input"
 securityDefinitions:
   ApiKeyAuth:
     type: apiKey
@@ -335,6 +425,34 @@ definitions:
       message:
         type: string
         example: Successful
+  UnlockDoorInput:
+    type: object
+    properties:
+      api_id:
+        type: string
+        example: Kx7wTKzom05IPiTxzDFd
+      uuid:
+        type: string
+        example: 1a3de7ac-2cdb-43cc-8175-3a49a6ff9f9f
+      timestamp:
+        type: string
+        example: "1666664898886"
+    xml:
+      name: "UnlockDoorInput"
+  StatusDoorInput:
+    type: object
+    properties:
+      api_id:
+        type: string
+        example: Kx7wTKzom05IPiTxzDFd
+      uuid:
+        type: string
+        example: 1a3de7ac-2cdb-43cc-8175-3a49a6ff9f9f
+      timestamp:
+        type: string
+        example: "1666664898886"
+    xml:
+      name: "UnlockDoorInput"
 externalDocs:
   description: "Example HMAC Signature Generator"
   url: "https://www.devglan.com/online-tools/hmac-sha256-online"
