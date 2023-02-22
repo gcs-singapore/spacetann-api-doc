@@ -84,7 +84,7 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Status of IOT Device"
+        description: "Status of IOT Device. No command will be send. The results are from last saved state."
         required: true
         schema:
           $ref: "#/definitions/GetDeviceDetail"
@@ -159,7 +159,7 @@ paths:
             $ref: '#/definitions/InvalidResponse'
         405:
           description: "Invalid input"
-  /ext/device/switch/status:
+  /ext/device/switch/status:  
     post:
       tags:
       - "device"
@@ -174,15 +174,45 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "status of IOT Device"
+        description: "Query status of IOT Device"
         required: true
         schema:
           $ref: "#/definitions/GetDeviceDetail"
       responses:
         200:
-          description: Successful operation
+          description: Successful operation. Please note if processed = 0, the results are from last saved state.
           schema:
             $ref: '#/definitions/DeviceSwitch'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        405:
+          description: "Invalid input"
+  /ext/device/battery/status:  
+    post:
+      tags:
+      - "device"
+      summary: "Command for battery status of IOT device"
+      security: 
+      - ApiKeyAuth: []
+        HMACKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Query battery status of IOT Device"
+        required: true
+        schema:
+          $ref: "#/definitions/GetDeviceDetail"
+      responses:
+        200:
+          description: Successful operation. Please note if processed = 0, the results are from last saved state.
+          schema:
+            $ref: '#/definitions/DeviceBattery'
         400:
           description: Invalid response
           schema:
@@ -422,6 +452,39 @@ definitions:
           message:
             type: string
             example: "message example here"
+      message:
+        type: string
+        example: Successful
+  DeviceBattery:
+    type: object
+    properties: 
+      resultcode:
+        type: string
+        example: "100"
+      data:
+        type: object
+        properties: 
+          processed:
+            type: integer
+            example: 1
+          status:
+            type: string
+            example: "On"
+          message:
+            type: string
+            example: "message example here"
+          info:
+            type: object
+            properties: 
+              parameter:
+                type: string
+                example: "Battery"
+              status:
+                type: string
+                example: "100"
+              datetime:
+                type: string
+                example: "2023-02-22T13:55:55.000Z"
       message:
         type: string
         example: Successful
