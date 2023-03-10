@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "<b>Spacetann API Documentation</b>\n The API uses the HMAC (hash-based message authentication code) to verify that a request is coming from an expected source and that the request has not been tampered with in transit. This is achieved by including both a public (x-api-key) and private key (key-secret) in each message, the latter of which is only known to the server and client. Using these values, the client will generate a unique HMAC (a hashed code) representing its request to the server. The client sends that HMAC (h-key) to the server, along with a timestamp and all the arguments and values it was going to send anyway.\n\nAll API call will require the x-api-key and h-key. The x-api-key and secrect code can be retrieved from the Spacetann Dashboard.\n\nExample of generation of h-key in nodejs:\n let h_key = crypto.createHmac('sha256','Secret Code').update(JSON.stringify('JSON Body Content')).digest('hex')\n\n[Node.js crypto.createHmac() Method](https://www.geeksforgeeks.org/node-js-crypto-createhmac-method/)"
-  version: "1.0.0"
+  version: "1.0.1"
   title: "Spacetann API"
 host: "api.spacetann.com"
 basePath: "/v1"
@@ -356,6 +356,10 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/FeatureData"
+      info:
+        type: array
+        items:
+          $ref: "#/definitions/InfoData"
   FeatureData:
     type: object
     properties: 
@@ -375,8 +379,30 @@ definitions:
         type: integer
         example: 102
       param:
+        type: array
+        items:
+          $ref: "#/definitions/ParamData"
+  ParamData:
+    type: object
+    properties: 
+      external_url:
         type: string
-        example: "[{\"Param\":\"SWITCH\",\"Type\":\"Selection\",\"Default\":\"\",\"Max\":\"\",\"Min\":\"\",\"Selection\":[\"ON\",\"OFF\"]}]"
+        example: /v1/ext/device/switch/binary/on
+      description:
+        type: string
+        example: Turn on switch
+  InfoData:
+    type: object
+    properties: 
+      parameter:
+        type: string
+        example: Battery
+      status:
+        type: string
+        example: 30
+      datetime:
+        type: string
+        example: 2023-03-09T11:24:55.000Z
   DeviceDetail:
     type: object
     properties: 
