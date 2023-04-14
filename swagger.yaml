@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "<b>Spacetann API Documentation</b>\n The API uses the HMAC (hash-based message authentication code) to verify that a request is coming from an expected source and that the request has not been tampered with in transit. This is achieved by including both a public (x-api-key) and private key (key-secret) in each message, the latter of which is only known to the server and client. Using these values, the client will generate a unique HMAC (a hashed code) representing its request to the server. The client sends that HMAC (h-key) to the server, along with a timestamp and all the arguments and values it was going to send anyway.\n\nAll API call will require the x-api-key and h-key. The x-api-key and secrect code can be retrieved from the Spacetann Dashboard.\n\nExample of generation of h-key in nodejs:\n let h_key = crypto.createHmac('sha256','Secret Code').update(JSON.stringify('JSON Body Content')).digest('hex')\n\n[Node.js crypto.createHmac() Method](https://www.geeksforgeeks.org/node-js-crypto-createhmac-method/)"
-  version: "1.0.1"
+  version: "1.0.2"
   title: "Spacetann API"
 host: "api.spacetann.com"
 basePath: "/v1"
@@ -268,6 +268,96 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/StatusDoorInput"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeviceSwitch'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        405:
+          description: "Invalid input"
+  /ext/device/aircon/on:
+    post:
+      tags:
+      - "device"
+      summary: "Command for turn on aircon"
+      security: 
+      - ApiKeyAuth: []
+        HMACKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Turn on aircon"
+        required: true
+        schema:
+          $ref: "#/definitions/GetDeviceDetail"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeviceSwitch'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        405:
+          description: "Invalid input"
+  /ext/device/aircon/off:
+    post:
+      tags:
+      - "device"
+      summary: "Command for turn off aircon"
+      security: 
+      - ApiKeyAuth: []
+        HMACKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Turn off aircon"
+        required: true
+        schema:
+          $ref: "#/definitions/GetDeviceDetail"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeviceSwitch'
+        400:
+          description: Invalid response
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        405:
+          description: "Invalid input"
+  /ext/device/aircon/status:
+    post:
+      tags:
+      - "device"
+      summary: "Command for aircon status"
+      security: 
+      - ApiKeyAuth: []
+        HMACKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Query status of aircon"
+        required: true
+        schema:
+          $ref: "#/definitions/GetDeviceDetail"
       responses:
         200:
           description: Successful operation
